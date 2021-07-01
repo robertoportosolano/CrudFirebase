@@ -8,9 +8,18 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'crear',
     pathMatch: 'full'
   },
+  {
+    path: 'crear',
+    loadChildren: () => import('./pages/crear/crear.module').then( m => m.CrearPageModule)
+  },
+  {
+    path: 'detalle/:id',
+    loadChildren: () => import('./pages/detalle/detalle.module').then( m => m.DetallePageModule)
+  },
+  
 ];
 
 @NgModule({
