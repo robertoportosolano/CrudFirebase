@@ -1,20 +1,28 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Blank
+      Lista de las Canciones
     </ion-title>
+    <ion-buttons>
+      <ion-button routerLink="/crear">
+       <ion-icon slot="icon-only" name="add"></ion-icon> 
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+  <ion-card *ngFor="let c of ListaCancion | async" routerLink="/detalle/{{c.id}}">
+   <ion-card-header>
+     {{c.nombreCancion}} 
+     </ion-card-header>
+   <ion-card-content>
+     El nombre del artista es: {{c.nombreArtista}}
+   </ion-card-content>
+  </ion-card>
 </ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-title>Aplicación creada por Roberto Porto</ion-title>
+  </ion-toolbar>
+</ion-footer>

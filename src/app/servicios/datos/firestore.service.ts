@@ -14,6 +14,18 @@ export class FirestoreService {
    return this.firestore.doc(`listaCancion/${id}`).set({id,nombreAlbum,nombreArtista,descripCancion,nombreCancion});
   }
  
+  obtenerListaCancion():AngularFirestoreCollection<Cancion>{
+  return this.firestore.collection('listaCancion'); 
+  }
+
+  detalleCancion(idCancion: string):AngularFirestoreDocument<Cancion>{
+   return this.firestore.collection(`listaCancion`).doc(idCancion);
+  }
+
+  eliminarCancion(idCancion: string):Promise<void>{
+   return this.firestore.doc(`listaCancion/${idCancion}`).delete();
+  }
+
 
 
 }
