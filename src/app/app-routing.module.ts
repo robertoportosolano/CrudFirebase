@@ -31,6 +31,22 @@ const routes: Routes = [
     path: 'registrar',
     loadChildren: () => import('./registrar/registrar.module').then( m => m.RegistrarPageModule)
   },
+  {
+    path: 'crear-evento',
+    loadChildren: () => import('./pagina_evento/crear-evento/crear-evento.module').then( m => m.CrearEventoPageModule)
+  },
+  {
+    path: 'detalle-evento/:id',
+    loadChildren: () => import('./pagina_evento/detalle-evento/detalle-evento.module').then( m => m.DetalleEventoPageModule)
+  },
+  {
+    path: 'lista-evento',
+    loadChildren: () => import('./pagina_evento/lista-evento/lista-evento.module').then( m => m.ListaEventoPageModule)
+  },
+  {
+    path: 'inicio-evento',
+    loadChildren: () => import('./pagina_evento/inicio-evento/inicio-evento.module').then( m => m.InicioEventoPageModule)
+  },
   
 ];
 

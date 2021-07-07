@@ -28,4 +28,9 @@ export class AuthService {
   return firebase.auth().signOut();
   }
 
+   obtenerUsuario(){
+    return firebase.auth().currentUser;
+     
+  }
+
 }

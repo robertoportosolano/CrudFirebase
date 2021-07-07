@@ -1,0 +1,15 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title> {{(eventoActual | async)?.nombre }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+<ion-card>
+  <ion-card-content>
+    <h3> informacion del evento: </h3>
+    <p>Tiquete: <strong> {{(eventoActual | async)?.precio | currency }}</strong> </p>
+    <p>Fecha: <strong> {{(eventoActual | async)?.fecha | date }}</strong> </p>
+  </ion-card-content>
+</ion-card>
+  </ion-content>
