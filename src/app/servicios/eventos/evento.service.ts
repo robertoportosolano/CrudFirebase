@@ -7,12 +7,16 @@ import { AngularFirestore,AngularFirestoreCollection,AngularFirestoreDocument, D
   providedIn: 'root'
 })
 export class EventoService {
+  
 
-  constructor(public listaRefEvento: AngularFirestore,public AS:AuthService) { }
+   public listaRefEvento: firebase.firestore.CollectionReference;
+  constructor(public AS:AuthService) { }
 
   async creacionEvento(nombreEvento:string,fechaEvento:string,precioEvento:number,costoEvento:number):Promise<DocumentReference>{
      const usuario: firebase.User= await this.AS.obtenerUsuario();
-     return  this.listaRefEvento.collection(`perfilUsuario/${usuario.uid}/listaEvento`).add({
+     this.listaRefEvento= firebase.firestore().collection(`perfilUsuario/${usuario.uid}/listaEvento`);
+     
+     return  this.listaRefEvento.add({
         nombre: nombreEvento,
         fecha: fechaEvento,
         precio: precioEvento*1,
@@ -23,16 +27,33 @@ export class EventoService {
 
 
 
-  obtener_listaEventos(){
+  obtener_listaEventos():Promise<firebase.firestore.QuerySnapshot>{
     const usuario: firebase.User= this.AS.obtenerUsuario();
-    const referencia= this.listaRefEvento.collection(`perfilUsuario/${usuario.uid}/listaEvento`);
-    return referencia.valueChanges({idCampo: 'id'}); 
+    this.listaRefEvento = firebase.firestore().collection(`perfilUsuario/${usuario.uid}/listaEvento`);
+        return this.listaRefEvento.get(); 
   }
 
-  obtener_detalleEvento(idEvento:string):AngularFirestoreDocument{
+  obtener_detalleEvento(idEvento:string):Promise<firebase.firestore.QueryDocumentSnapshot>{
     const usuario: firebase.User= this.AS.obtenerUsuario(); 
-    return this.listaRefEvento.collection(`perfilUsuario/${usuario.uid}/listaEvento`).doc(idEvento);
+    this.listaRefEvento=firebase.firestore().collection(`perfilUsuario/${usuario.uid}/listaEvento`);
+    return this.listaRefEvento.doc(idEvento).get();
 
+  }
+
+  async agregarInvitados(nombreInvitado: string, idEvento: string, precioEvento: number):Promise<void>{
+
+   return this.listaRefEvento.doc(idEvento)
+   .collection('listaInvitado')
+   .add({nombreInvitado})
+   .then((nuevoInvitado)=>{
+      return firebase.firestore().runTransaction(transaction=> {
+        return transaction.get(this.listaRefEvento.doc(idEvento)).then(eventoDoc=>{
+          const nuevoIngreso = eventoDoc.data().ingreso + precioEvento;
+          transaction.update(this.listaRefEvento.doc(idEvento), {ingreso: nuevoIngreso}
+          );
+        });
+      });
+   });
   }
 
 

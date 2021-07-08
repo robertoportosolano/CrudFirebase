@@ -10,11 +10,11 @@
 <ion-content class="ion-padding">
   <ion-list>
   <ion-lis-header> <ion-label> Tus proximos eventos</ion-label></ion-lis-header>
-    <ion-item tappable *ngFor="let evento of listaEventos | async " routerLink="/detalle-evento/{{evento.id}}" >   
+    <ion-item tappable *ngFor="let evento of listaEventos" routerLink="/detalle-evento/{{evento.id}}" >   
         <ion-label>
-            <h3> {{evento.nombre}} </h3>
-            <p>Tiquete: <strong> {{evento.precio | currency}}</strong> </p>
-            <p>Fecha: <strong> {{evento.fecha | date}}</strong> </p>
+            <h3> {{evento?.nombre}} </h3>
+            <p>Tiquete: <strong> {{evento?.precio}}</strong> </p>
+            <p>Fecha: <strong> {{evento?.fecha }}</strong> </p>
       </ion-label>
     </ion-item>
   </ion-list>

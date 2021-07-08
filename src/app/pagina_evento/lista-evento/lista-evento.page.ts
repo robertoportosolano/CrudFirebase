@@ -11,8 +11,17 @@ export class ListaEventoPage implements OnInit {
   constructor(public es:EventoService) { }
 
   ngOnInit() {
-  console.log(typeof(this.listaEventos));
-  this.listaEventos= this.es.obtener_listaEventos();
+  this.es.obtener_listaEventos().then(listaEventoSnapShot=>{
+   this.listaEventos=[];
+   listaEventoSnapShot.forEach(snap=>{this.listaEventos.push({id: snap.id,
+    nombre: snap.data().nombre,
+    precio: snap.data().precio,
+    fecha: snap.data().fecha });
+    return false;
+    });
+ });
+
+
 
   }
 

@@ -1,15 +1,41 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title> {{(eventoActual | async)?.nombre }}</ion-title>
+    <ion-title> {{eventoActual?.nombre }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
 <ion-card>
+  <ion-card-header>
+   Ingreso del evento:
+   <span [class.rentable]="eventoActual?.ingreso > 0" [class.no-rentable]="eventoActual?.ingreso < 0"> {{eventoActual?.ingreso | currency }} </span>
+  </ion-card-header>
   <ion-card-content>
     <h3> informacion del evento: </h3>
-    <p>Tiquete: <strong> {{(eventoActual | async)?.precio | currency }}</strong> </p>
-    <p>Fecha: <strong> {{(eventoActual | async)?.fecha | date }}</strong> </p>
+    <p>Tiquete: <strong> {{eventoActual?.precio }}</strong> </p>
+    <p>Fecha: <strong> {{eventoActual?.fecha }}</strong> </p>
+  </ion-card-content>
+</ion-card>
+
+<ion-card class=".agregar-invitado-formulario">
+<ion-card-header>
+  Agregar invitado
+</ion-card-header>
+<ion-card-content>
+  <ion-item>
+<ion-label position="stacked">
+Nombre:
+</ion-label>
+<ion-input [(ngModel)]="nombreInvitado" type="text" aria-placeholder="Cual es el nombre del invitado?">
+</ion-input>
+  </ion-item>
+  <ion-button color="primary" (click)="agregarInvitado(nombreInvitado)" [disabled]="!nombreInvitado" >Agregar invitado </ion-button>
+</ion-card-content>
+</ion-card>
+<ion-card>
+  <ion-card-content>
+    <p>Tiquete: <strong> {{eventoActual?.precio }}</strong> </p>
+    <p>Fecha: <strong> {{eventoActual?.fecha }}</strong> </p>
   </ion-card-content>
 </ion-card>
   </ion-content>

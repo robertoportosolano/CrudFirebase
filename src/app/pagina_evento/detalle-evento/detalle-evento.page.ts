@@ -9,16 +9,23 @@ import { ActivatedRoute } from "@angular/router";
 })
 export class DetalleEventoPage implements OnInit {
   
-  public eventoActual:any={};
-  public idEvento:string;
+  public eventoActual:any=[];
+  public nombreInvitado="";
 
   constructor(public es:EventoService, public Ar:ActivatedRoute) { }
 
   ngOnInit() {
-   this.idEvento= this.Ar.snapshot.paramMap.get('id');
-   this.eventoActual= this.es.obtener_detalleEvento(this.idEvento).valueChanges();
- 
-  }
+   const idEvento: string= this.Ar.snapshot.paramMap.get('id');
+   this.es.obtener_detalleEvento(idEvento).then(eventoSnapshot=>{
+     this.eventoActual= eventoSnapshot.data();
+     this.eventoActual.id= eventoSnapshot.id;
+   });
+   }
+
+   agregarInvitado(nombreInvitado: string): void{
+     this.es.agregarInvitados(nombreInvitado, this.eventoActual.id,this.eventoActual.precio).then(() => this.nombreInvitado = '');
+
+   }  
 
 
 
