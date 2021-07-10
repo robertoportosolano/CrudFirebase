@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AdminGuard } from './core/admin.guard';
 
 const routes: Routes = [
   {
@@ -33,15 +34,15 @@ const routes: Routes = [
   },
   {
     path: 'crear-evento',
-    loadChildren: () => import('./pagina_evento/crear-evento/crear-evento.module').then( m => m.CrearEventoPageModule)
+    loadChildren: () => import('./pagina_evento/crear-evento/crear-evento.module').then( m => m.CrearEventoPageModule), canActivate: [AdminGuard]
   },
   {
     path: 'detalle-evento/:id',
-    loadChildren: () => import('./pagina_evento/detalle-evento/detalle-evento.module').then( m => m.DetalleEventoPageModule)
+    loadChildren: () => import('./pagina_evento/detalle-evento/detalle-evento.module').then( m => m.DetalleEventoPageModule), canActivate: [AdminGuard]
   },
   {
     path: 'lista-evento',
-    loadChildren: () => import('./pagina_evento/lista-evento/lista-evento.module').then( m => m.ListaEventoPageModule)
+    loadChildren: () => import('./pagina_evento/lista-evento/lista-evento.module').then( m => m.ListaEventoPageModule), canActivate: [AdminGuard]
   },
   {
     path: 'inicio-evento',

@@ -30,7 +30,10 @@ export class AuthService {
 
    obtenerUsuario(){
     return firebase.auth().currentUser;
-     
-  }
+   }
+
+   usuarioActual(){
+      return firebase.auth().onAuthStateChanged;
+   }
 
 }
